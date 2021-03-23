@@ -1,22 +1,29 @@
 #ifndef _TagStruct_h
 #define _TagStruct_h
-#include <string>
+#include <string.h>
 #include <vector>
 #include <fstream>
+#include <iostream>
 
-struct Tag_Information{
-	std::string tag_name;
-	int num_pairs;
-	std::string tag_text;
-};
+namespace MSPCAM001
+{
+	struct tag_Information{
+		std::string tag_name;
+		int num_pairs;
+		std::string tag_text;
+	}tag;
 
-std::vector<Tag_Information> Tag_Collection;
-std::string fileHolder;
-int counter;
-char* fileName;
-ifstream infile;
-ofstream outfile;
+	std::vector<tag_Information> tag_Collection;
+	std::vector<std::string> edgeCases;
+	std::string fileHolder;
+	size_t found;
+	ifstream infile;
+	ofstream outfile;
 
-void fileread(char* file);
-void Tag_Clear();
-void Tag_Add(std::string line);
+	void fileread(char* file);
+	void tag_Add(std::string line);
+	void tag_Clear();
+	void print_Tags();
+	void write_Tags();
+	void single_Tag(std::string given_tag);
+}
