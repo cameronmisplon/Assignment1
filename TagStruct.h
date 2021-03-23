@@ -17,9 +17,6 @@ namespace MSPCAM001
 	std::vector<std::string> edgeCases;
 	std::string fileHolder;
 	size_t found;
-	ifstream infile;
-	ofstream outfile;
-
 	void fileread(char* file);
 	void tag_Add(std::string line);
 	void tag_Clear();
@@ -27,3 +24,4 @@ namespace MSPCAM001
 	void write_Tags();
 	void single_Tag(std::string given_tag);
 }
+#endif
