@@ -4,14 +4,13 @@
 
 int main(int argc, char** argv)
 {
-	std::string message = "r: Read and process tag file \np: Print all tags \nd: Write data to tag.txt \nl: Print tag data for a tag you enter \nq: Quit \nEnter an option (r,p,d,l) or q to quit, and press return.";
 	std::string option;
 	std::string fileName;
         std::string chosenTag;
 	std::string returnKey;
 	for(;;)
 	{
-		std::cout << message << std::endl;
+		std::cout << MSPCAM001::message << std::endl;
 		std::cin >> option;
 		if (option=="q")
 		{

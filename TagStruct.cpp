@@ -12,6 +12,8 @@ struct tag_Information
 std::vector<tag_Information> tag_Collection;
 std::vector<std::string> edgeCases;
 size_t found;
+int edgeTag;
+std::string message = "r: Read and process tag file \np:Print all tags \nd:Write data to tag.txt \nl: Print tag data for a tag you enter \nq: Quit \nEnter an option (r,p,d,l) or q to quit, and press return.";
 
 void fileread(std::string file)
 {
@@ -62,12 +64,20 @@ void tag_Add(std::string line)
 	else
 	{
 		found = line.find('<');
+		for (int o=0;o<tag_Collection.size();++o)
+		{
+			if (tag_Collection[o].tag_text==edgeCases[edgeCases.size()-1])
+			{
+				edgeTag=0;
+				break;
+			}
+		}
 		if (found == std::string::npos)
 		{
-			tag_Collection[tag_Collection.size()-1].tag_text+=":"+line;
+			tag_Collection[edgeTag].tag_text+=":"+line;
 		}
 		else{
-			tag_Collection[tag_Collection.size()-1].tag_text+=":"+line.substr(0,found);
+			tag_Collection[edgeTag].tag_text+=":"+line.substr(0,found);
 			edgeCases.pop_back();
 		
 		}
