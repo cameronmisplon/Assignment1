@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 
-int main(int argc, char** argv)
+int main(int argc, char** argv) //Takes in user input and branches based on which option the user chooses. Loops endlessly until the user chooses the q option
 {
 	std::string option;
 	std::string fileName;

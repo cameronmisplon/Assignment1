@@ -8,17 +8,17 @@ struct tag_Information
 	std::string tag_name;
 	int num_pairs;
 	std::string tag_text;
-}tag;
+}tag; // The data structure which is used to store the information relating to each tag
 std::vector<tag_Information> tag_Collection;
-std::vector<std::string> edgeCases;
-size_t found;
-int edgeTag;
+std::vector<std::string> edgeCases;  //Adds the name of a nested tag as it appears, this is useful as any line not starting with a '<' will be added to the last tag stored in edgeCases
+size_t found; //Used to store the length of the tag for that line
+int edgeTag; // Used in the cases of nested tags to store which element we need to add the nested text to.
 std::string message = "r: Read and process tag file \np:Print all tags \nd:Write data to tag.txt \nl: Print tag data for a tag you enter \nq: Quit \nEnter an option (r,p,d,l) or q to quit, and press return.";
+std::string fileHolder; //used to read in text file input line by line
 
 void fileread(std::string file)
 {
 	std::ifstream infile(file);
-	std::string fileHolder;
 	while (getline (infile,fileHolder)){
 		tag_Add(fileHolder);
 	}
@@ -27,25 +27,25 @@ void fileread(std::string file)
 
 void tag_Add(std::string line)
 {
-	if (line.substr(0,1)=="<")
+	if (line.substr(0,1)=="<") //otherwise the line must be added to a nested tag
 	{
 		found = line.find('>');
-		if (line.find("/")==1){
+		if (line.find("/")==1){ //Doesn't have any text, just closes a previously nested tag.
 			edgeCases.pop_back();
 		}
 		else{
 			tag.tag_name=line.substr(1,found-1);
 			tag.num_pairs=1;
-			if (line.find('<',1)==std::string::npos)
+			if (line.find('<',1)==std::string::npos) //tag isn't closed on the same line - must be a nested tag
 			{
 				edgeCases.push_back(tag.tag_name);
 				tag.tag_text = line.substr(found+1);
 			}
 			else{
-			        tag.tag_text = line.substr(found+1,line.find('/')-found-2); 
+			        tag.tag_text = line.substr(found+1,line.find('/')-found-2); // The length of the substr is equal to the position of the start of the closing tag minus the length of the opening tag.
 			}
 			bool temp = true;
-			for (int i=0;i<tag_Collection.size();++i)
+			for (int i=0;i<tag_Collection.size();++i) //checks whether this tag has been seen before
 			{
 				if (tag_Collection[i].tag_name==tag.tag_name)
 				{
@@ -63,22 +63,22 @@ void tag_Add(std::string line)
 	}
 	else
 	{
-		found = line.find('<');
+		found = line.find('<'); //checks whether line has closing tag
 		for (int o=0;o<tag_Collection.size();++o)
 		{
 			if (tag_Collection[o].tag_text==edgeCases[edgeCases.size()-1])
 			{
-				edgeTag=0;
+				edgeTag=o;
 				break;
 			}
 		}
-		if (found == std::string::npos)
+		if (found == std::string::npos) //line doesn't have a closing tag
 		{
 			tag_Collection[edgeTag].tag_text+=":"+line;
 		}
 		else{
 			tag_Collection[edgeTag].tag_text+=":"+line.substr(0,found);
-			edgeCases.pop_back();
+			edgeCases.pop_back(); //The presence of a closing tag means that the tag is no longer a nested tag
 		
 		}
 	}

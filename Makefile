@@ -1,12 +1,16 @@
-TagStructDriver.exe: TagStruct.o TagStructDriver.o
-	g++ TagStruct.o TagStructDriver.o -o TagStructDriver.exe -std=c++2a
+CC=g++
+FLAGS=-std=c++2a
+TARGET=TagStructDriver.exe
+
+$(TARGET): TagStruct.o TagStructDriver.o
+	$(CC) TagStruct.o TagStructDriver.o -o $(TARGET) $(FLAGS)
 TagStruct.o: TagStruct.cpp
-	g++ -c TagStruct.cpp -o TagStruct.o -std=c++2a
+	$(CC) -c TagStruct.cpp -o TagStruct.o $(FLAGS)
 TagStructDriver.o: TagStructDriver.cpp
-	g++ -c TagStructDriver.cpp -o TagStructDriver.o -std=c++2a
+	$(CC) -c TagStructDriver.cpp -o $(TARGET) $(FLAGS)
 clean:
-	rm *.o TagStructDriver.exe
-run: TagStructDriver.exe
-	chmod 700 TagStructDriver.exe
-	./TagStructDriver.exe
+	rm *.o $(TARGET)
+run: $(TARGET)
+	chmod 700 $(TARGET)
+	./$(TARGET)
 
